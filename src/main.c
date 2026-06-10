@@ -1,18 +1,28 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <time.h>
 #include <sys/ioctl.h>
 
 const char* ART[] = { 
+" ",
 "███████╗██╗     ███████╗███████╗██████╗ ██████╗" ,
 "██╔════╝██║     ██╔════╝██╔════╝██╔══██╗██╔══██╗",
 "███████╗██║     █████╗  █████╗  ██████╔╝██████╔╝",
 "╚════██║██║     ██╔══╝  ██╔══╝  ██╔═══╝ ██╔══██╗",
 "███████║███████╗███████╗███████╗██║     ██║  ██║",
-"╚══════╝╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝  ╚═╝"
+"╚══════╝╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝  ╚═╝",
+" "
 };
 
 void print_centered_art(void) {
+  struct timespec ts = {
+    .tv_sec = 0,
+    .tv_nsec = 150000000
+  };
+
   struct winsize w;
   ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
@@ -20,7 +30,7 @@ void print_centered_art(void) {
   int term_heigth = w.ws_row;
 
   int art_width = 50;
-  int art_height = 6;
+  int art_height = 8;
 
   int start_row = (term_heigth - art_height) / 2;
   int start_col = (term_width - art_width) / 2;
@@ -32,9 +42,12 @@ void print_centered_art(void) {
         start_row + i + 1,
         start_col,
         ART[i]);
+
+    fflush(stdout);
+    nanosleep(&ts, NULL);
   }
 
-  fflush(stdout);
+
 }
 
 int main() {
