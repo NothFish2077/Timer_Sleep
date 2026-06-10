@@ -2,7 +2,7 @@
 # Project Configuration
 # ==================================================
 
-TARGET      := timer_sleep
+TARGET      := sleepr
 
 SRC_DIR     := src
 INC_DIR     := include
