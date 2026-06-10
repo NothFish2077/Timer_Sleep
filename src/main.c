@@ -3,7 +3,10 @@
 #include <stdlib.h>
 
 int main() {
-  int segundos = 3600;
+  int segundos;
+
+  printf("Em quanto tempo o computador vai suspender? (segundos): ");
+  scanf("%d", &segundos);
 
   puts("Suspendendo o computador em");
 
